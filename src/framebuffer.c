@@ -39,3 +39,36 @@ void fb_clear(Framebuffer *fb, uint32_t color) {
         }
     }
 }
+
+void fb_put_pixel(Framebuffer *fb, int x, int y, uint32_t color) {
+    if (x >= 0 && x < fb->width && y >= 0 && y < fb->height) {
+        fb->buffer[y * fb->width + x] = color;
+    }
+}
+
+void fb_draw_line(Framebuffer *fb, int x0, int y0, int x1, int y1, uint32_t color) {
+    int dx = abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+    int dy = abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+    int err = (dx > dy ? dx : -dy) / 2, e2;
+
+    while (1) {
+        fb_put_pixel(fb, x0, y0, color);
+        if (x0 == x1 && y0 == y1) break;
+        e2 = err;
+        if (e2 > -dx) { err -= dy; x0 += sx; }
+        if (e2 < dy) { err += dx; y0 += sy; }
+    }
+}
+
+void fb_draw_rect(Framebuffer *fb, int x, int y, int width, int height, uint32_t color) {
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            fb_put_pixel(fb, x + i, y + j, color);
+        }
+    }
+}
+
+void fb_cleanup(Framebuffer *fb) {
+    munmap(fb->buffer, fb->pitch * fb->height);
+    close(fb->fd);
+}
