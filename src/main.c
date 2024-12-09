@@ -24,9 +24,11 @@ int main() {
     fb_draw_line(&fb, 0, 0, fb.width - 1, fb.height - 1, COLOR_RED);
     fb_draw_rect(&fb, 100, 100, 200, 150, COLOR_GREEN);
     fb_draw_line(&fb, 0, fb.height - 1, fb.width - 1, 0, COLOR_BLUE);
+    fb_draw_heart(&fb, fb.width / 4, fb.height / 4, 100, COLOR_RED);
+    fb_draw_smiley(&fb, fb.width * 3 / 4, fb.height * 3 / 4, 75, COLOR_YELLOW);
 
-    // Keep the display for 5 seconds
-    sleep(5);
+    // Keep the display for 10 seconds
+    sleep(10);
 
     fb_cleanup(&fb);
     return 0;
