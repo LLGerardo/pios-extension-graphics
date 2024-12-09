@@ -16,6 +16,8 @@ void fb_clear(Framebuffer *fb, uint32_t color);
 void fb_put_pixel(Framebuffer *fb, int x, int y, uint32_t color);
 void fb_draw_line(Framebuffer *fb, int x0, int y0, int x1, int y1, uint32_t color);
 void fb_draw_rect(Framebuffer *fb, int x, int y, int width, int height, uint32_t color);
+void fb_draw_heart(Framebuffer *fb, int x, int y, int size, uint32_t color);
+void fb_draw_smiley(Framebuffer *fb, int x, int y, int radius, uint32_t color);
 void fb_cleanup(Framebuffer *fb);
 
 #endif

@@ -68,6 +68,68 @@ void fb_draw_rect(Framebuffer *fb, int x, int y, int width, int height, uint32_t
     }
 }
 
+void fb_draw_circle(Framebuffer *fb, int x0, int y0, int radius, uint32_t color) {
+    int x = radius-1;
+    int y = 0;
+    int dx = 1;
+    int dy = 1;
+    int err = dx - (radius << 1);
+
+    while (x >= y) {
+        fb_put_pixel(fb, x0 + x, y0 + y, color);
+        fb_put_pixel(fb, x0 + y, y0 + x, color);
+        fb_put_pixel(fb, x0 - y, y0 + x, color);
+        fb_put_pixel(fb, x0 - x, y0 + y, color);
+        fb_put_pixel(fb, x0 - x, y0 - y, color);
+        fb_put_pixel(fb, x0 - y, y0 - x, color);
+        fb_put_pixel(fb, x0 + y, y0 - x, color);
+        fb_put_pixel(fb, x0 + x, y0 - y, color);
+
+        if (err <= 0) {
+            y++;
+            err += dy;
+            dy += 2;
+        }
+        if (err > 0) {
+            x--;
+            dx += 2;
+            err += dx - (radius << 1);
+        }
+    }
+}
+
+void fb_draw_heart(Framebuffer *fb, int x, int y, int size, uint32_t color) {
+    int width = size;
+    int height = size;
+    
+    for (int i = -width/2; i <= width/2; i++) {
+        for (int j = -height/2; j <= height/2; j++) {
+            float dx = (float)i / (width/2);
+            float dy = (float)j / (height/2);
+            if ((dx*dx + dy*dy - 1)*(dx*dx + dy*dy - 1)*(dx*dx + dy*dy - 1) - dx*dx*dy*dy*dy <= 0.0) {
+                fb_put_pixel(fb, x+i, y+j, color);
+            }
+        }
+    }
+}
+
+void fb_draw_smiley(Framebuffer *fb, int x, int y, int radius, uint32_t color) {
+    // face
+    fb_draw_circle(fb, x, y, radius, color);
+    
+    // eyes
+    int eye_radius = radius / 5;
+    fb_draw_circle(fb, x - radius/3, y - radius/3, eye_radius, color);
+    fb_draw_circle(fb, x + radius/3, y - radius/3, eye_radius, color);
+    
+    // smile
+    int smile_radius = radius * 2 / 3;
+    for (int i = -smile_radius; i <= smile_radius; i++) {
+        int h = (int)(sqrt(smile_radius*smile_radius - i*i) / 1.5);
+        fb_put_pixel(fb, x + i, y + h, color);
+    }
+}
+
 void fb_cleanup(Framebuffer *fb) {
     munmap(fb->buffer, fb->pitch * fb->height);
     close(fb->fd);
