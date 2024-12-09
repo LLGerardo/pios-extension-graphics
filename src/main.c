@@ -23,10 +23,16 @@ int main() {
 
     // Draw some shapes
     fb_draw_line(&fb, 0, 0, fb.width - 1, fb.height - 1, COLOR_RED);
+    printf("This is a line printed to the screen.\n");
+    sleep(3);
     fb_draw_rect(&fb, 100, 100, 200, 150, COLOR_GREEN);
-    fb_draw_line(&fb, 0, fb.height - 1, fb.width - 1, 0, COLOR_BLUE);
+    printf("This is a rectangle printed to the screen.\n");
+    sleep(3);
     fb_draw_heart(&fb, fb.width / 4, fb.height / 4, 100, COLOR_RED);
+    printf("This is a heart printed to the screen.\n");
+    sleep(3);
     fb_draw_smiley(&fb, fb.width * 3 / 4, fb.height * 3 / 4, 75, COLOR_YELLOW);
+    printf("This is a smiley face printed to the screen.\n");
 
     // Keep the display for 10 seconds
     sleep(10);
