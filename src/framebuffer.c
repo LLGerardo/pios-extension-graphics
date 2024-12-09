@@ -44,6 +44,7 @@ void fb_clear(Framebuffer *fb, uint32_t color) {
 void fb_put_pixel(Framebuffer *fb, int x, int y, uint32_t color) {
     if (x >= 0 && x < fb->width && y >= 0 && y < fb->height) {
         fb->buffer[y * fb->width + x] = color;
+        printf("pixel printed");
     }
 }
 
