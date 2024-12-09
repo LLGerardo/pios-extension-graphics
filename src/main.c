@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "framebuffer.h"
-#include "mb.c"
+//#include "mb.c"
 
 #define COLOR_RED   0xFF0000
 #define COLOR_GREEN 0x00FF00
 #define COLOR_BLUE  0x0000FF
 #define COLOR_WHITE 0xFFFFFF
+#define COLOR_YELLOW 0xFFFF00
 
 int main() {
     Framebuffer fb;

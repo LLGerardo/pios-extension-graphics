@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 int fb_init(Framebuffer *fb) {
     fb->fd = open("/dev/fb0", O_RDWR);

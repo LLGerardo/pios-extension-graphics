@@ -9,7 +9,7 @@ EXECUTABLE = pios_graphics
 all: $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS) -lm
 
 .c.o:
 	$(CC) $(CFLAGS) -c $< -o $@
